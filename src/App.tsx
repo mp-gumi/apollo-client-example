@@ -39,6 +39,7 @@ function App() {
           onChange={(event) => setGithubId(event.target.value)}
           value={githubId}
         />
+        ;
       </label>
       <label htmlFor="repositoriesNumber">
         {`Get `}
