@@ -1,13 +1,19 @@
 import { gql, useQuery } from "@apollo/client";
+import styles from "./index.module.css";
 import dayjs from "dayjs";
 
 type UserDataProps = {
   repositoriesNumber: string;
   githubId: string;
+  dataOrder: string;
 };
 
 const GET_USER_DATA = gql`
-  query getMyUsers($count: Int!, $id: String!) {
+  query getAnyRepositories(
+    $count: Int!
+    $id: String!
+    $dataOrder: OrderDirection!
+  ) {
     user(login: $id) {
       login
       name
@@ -17,22 +23,27 @@ const GET_USER_DATA = gql`
       avatarUrl
       repositories(
         first: $count
-        orderBy: { field: UPDATED_AT, direction: DESC }
+        orderBy: { field: CREATED_AT, direction: $dataOrder }
       ) {
         nodes {
           createdAt
           description
           name
           url
+          updatedAt
         }
       }
     }
   }
 `;
 
-function UserData({ repositoriesNumber, githubId }: UserDataProps) {
+function UserData({ repositoriesNumber, githubId, dataOrder }: UserDataProps) {
   const { loading, error, data } = useQuery(GET_USER_DATA, {
-    variables: { count: parseInt(repositoriesNumber, 10), id: githubId },
+    variables: {
+      count: parseInt(repositoriesNumber, 10),
+      id: githubId,
+      dataOrder,
+    },
   });
   const {
     login,
@@ -46,7 +57,7 @@ function UserData({ repositoriesNumber, githubId }: UserDataProps) {
   const repositoriesArray = repositories?.nodes;
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: "red" }}>{error.message}</p>;
+  if (error) return <p className={styles.errorText}>{error.message}</p>;
 
   const repositoriesItem = repositoriesArray.map(
     (
@@ -55,11 +66,13 @@ function UserData({ repositoriesNumber, githubId }: UserDataProps) {
         name,
         createdAt,
         url,
+        updatedAt,
       }: {
         description: string;
         name: string;
         createdAt: string;
         url: string;
+        updatedAt: string;
       },
       index: number
     ) => {
@@ -68,8 +81,18 @@ function UserData({ repositoriesNumber, githubId }: UserDataProps) {
           <div>
             {index + 1}. <a href={url}>{name}</a>
           </div>
-          <div>created date : {dayjs(createdAt).format("YYYY/M/D H:m")}</div>
-          <div>description: {description ? description : "none"}</div>
+          <div>
+            <span className={styles.title}>Created date</span> :{" "}
+            {dayjs(createdAt).format("YYYY/M/D H:mm")}
+          </div>
+          <div>
+            <span className={styles.title}>Updated date</span> :{" "}
+            {dayjs(updatedAt).format("YYYY/M/D H:mm")}
+          </div>
+          <div>
+            <span className={styles.title}>description</span>:{" "}
+            {description ? description : "none"}
+          </div>
         </div>
       );
     }

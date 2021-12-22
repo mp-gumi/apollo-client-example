@@ -1,3 +1,5 @@
+import { useState } from "react";
+import styles from "./App.module.css";
 import {
   ApolloClient,
   ApolloProvider,
@@ -5,7 +7,6 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { useState } from "react";
 import UserData from "./components/UserData";
 
 const httpLink = createHttpLink({
@@ -30,9 +31,10 @@ const client = new ApolloClient({
 function App() {
   const [repositoriesNumber, setRepositoriesNumber] = useState("5");
   const [githubId, setGithubId] = useState("");
+  const [dataOrder, setDataOrder] = useState("DESC");
   return (
     <div>
-      <label htmlFor="githubId" style={{ paddingRight: 20 }}>
+      <label htmlFor="githubId" className={styles.idArea}>
         ID:
         <input
           type="text"
@@ -41,8 +43,17 @@ function App() {
         />
         ;
       </label>
-      <label htmlFor="repositoriesNumber">
-        {`Get `}
+      Get
+      <label className={styles.selectArea}>
+        <select
+          onChange={(event) => setDataOrder(event.target.value)}
+          value={dataOrder}
+        >
+          <option value={"DESC"}>newer</option>
+          <option value={"ASC"}>older</option>
+        </select>
+      </label>
+      <label htmlFor="repositoriesNumber" className={styles.selectArea}>
         <select
           onChange={(event) => setRepositoriesNumber(event.target.value)}
           value={repositoriesNumber}
@@ -52,17 +63,18 @@ function App() {
           <option value={"15"}>15</option>
           <option value={"20"}>20</option>
         </select>
-        {` repositories`}
       </label>
+      repositories
       {githubId ? (
         <ApolloProvider client={client}>
           <UserData
             repositoriesNumber={repositoriesNumber}
             githubId={githubId}
+            dataOrder={dataOrder}
           />
         </ApolloProvider>
       ) : (
-        <div style={{ color: "red" }}>Please input ID!</div>
+        <div className={styles.errorText}>Please input ID!</div>
       )}
     </div>
   );
