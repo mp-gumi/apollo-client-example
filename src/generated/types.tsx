@@ -22499,32 +22499,18 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-export type GetAnyRepositoriesQueryVariables = Exact<{
+export type GetUserDataQueryVariables = Exact<{
   count: Scalars['Int'];
   id: Scalars['String'];
   dataOrder: OrderDirection;
 }>;
 
 
-export type GetAnyRepositoriesQuery = { user?: { login: string, name?: string | null | undefined, location?: string | null | undefined, email: string, url: any, avatarUrl: any, repositories: { nodes?: Array<{ createdAt: any, description?: string | null | undefined, name: string, url: any, updatedAt: any } | null | undefined> | null | undefined } } | null | undefined };
-
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type GetUserDataQuery = { user?: { login: string, name?: string | null | undefined, location?: string | null | undefined, email: string, url: any, avatarUrl: any, repositories: { nodes?: Array<{ createdAt: any, description?: string | null | undefined, name: string, updatedAt: any, url: any } | null | undefined> | null | undefined } } | null | undefined };
 
 
-export type Unnamed_1_Query = { search: { issueCount: number, nodes?: Array<{ number: number, title: string } | {} | null | undefined> | null | undefined } };
-
-export type GetMyUsersQueryVariables = Exact<{
-  count: Scalars['Int'];
-  id: Scalars['String'];
-  dataOrder: OrderDirection;
-}>;
-
-
-export type GetMyUsersQuery = { user?: { login: string, name?: string | null | undefined, location?: string | null | undefined, email: string, url: any, avatarUrl: any, repositories: { nodes?: Array<{ createdAt: any, description?: string | null | undefined, name: string, url: any, updatedAt: any } | null | undefined> | null | undefined } } | null | undefined };
-
-
-export const GetAnyRepositoriesDocument = gql`
-    query getAnyRepositories($count: Int!, $id: String!, $dataOrder: OrderDirection!) {
+export const GetUserDataDocument = gql`
+    query getUserData($count: Int!, $id: String!, $dataOrder: OrderDirection!) {
   user(login: $id) {
     login
     name
@@ -22537,44 +22523,44 @@ export const GetAnyRepositoriesDocument = gql`
         createdAt
         description
         name
-        url
         updatedAt
+        url
       }
     }
   }
 }
     `;
-export type GetAnyRepositoriesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables>, 'query'> & ({ variables: GetAnyRepositoriesQueryVariables; skip?: boolean; } | { skip: boolean; });
+export type GetUserDataComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetUserDataQuery, GetUserDataQueryVariables>, 'query'> & ({ variables: GetUserDataQueryVariables; skip?: boolean; } | { skip: boolean; });
 
-    export const GetAnyRepositoriesComponent = (props: GetAnyRepositoriesComponentProps) => (
-      <ApolloReactComponents.Query<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables> query={GetAnyRepositoriesDocument} {...props} />
+    export const GetUserDataComponent = (props: GetUserDataComponentProps) => (
+      <ApolloReactComponents.Query<GetUserDataQuery, GetUserDataQueryVariables> query={GetUserDataDocument} {...props} />
     );
     
-export type GetAnyRepositoriesProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables>
+export type GetUserDataProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetUserDataQuery, GetUserDataQueryVariables>
     } & TChildProps;
-export function withGetAnyRepositories<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withGetUserData<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  GetAnyRepositoriesQuery,
-  GetAnyRepositoriesQueryVariables,
-  GetAnyRepositoriesProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables, GetAnyRepositoriesProps<TChildProps, TDataName>>(GetAnyRepositoriesDocument, {
-      alias: 'getAnyRepositories',
+  GetUserDataQuery,
+  GetUserDataQueryVariables,
+  GetUserDataProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetUserDataQuery, GetUserDataQueryVariables, GetUserDataProps<TChildProps, TDataName>>(GetUserDataDocument, {
+      alias: 'getUserData',
       ...operationOptions
     });
 };
 
 /**
- * __useGetAnyRepositoriesQuery__
+ * __useGetUserDataQuery__
  *
- * To run a query within a React component, call `useGetAnyRepositoriesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAnyRepositoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAnyRepositoriesQuery({
+ * const { data, loading, error } = useGetUserDataQuery({
  *   variables: {
  *      count: // value for 'count'
  *      id: // value for 'id'
@@ -22582,143 +22568,14 @@ export function withGetAnyRepositories<TProps, TChildProps = {}, TDataName exten
  *   },
  * });
  */
-export function useGetAnyRepositoriesQuery(baseOptions: Apollo.QueryHookOptions<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables>) {
+export function useGetUserDataQuery(baseOptions: Apollo.QueryHookOptions<GetUserDataQuery, GetUserDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables>(GetAnyRepositoriesDocument, options);
+        return Apollo.useQuery<GetUserDataQuery, GetUserDataQueryVariables>(GetUserDataDocument, options);
       }
-export function useGetAnyRepositoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables>) {
+export function useGetUserDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserDataQuery, GetUserDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables>(GetAnyRepositoriesDocument, options);
+          return Apollo.useLazyQuery<GetUserDataQuery, GetUserDataQueryVariables>(GetUserDataDocument, options);
         }
-export type GetAnyRepositoriesQueryHookResult = ReturnType<typeof useGetAnyRepositoriesQuery>;
-export type GetAnyRepositoriesLazyQueryHookResult = ReturnType<typeof useGetAnyRepositoriesLazyQuery>;
-export type GetAnyRepositoriesQueryResult = Apollo.QueryResult<GetAnyRepositoriesQuery, GetAnyRepositoriesQueryVariables>;
-export const Document = gql`
-    {
-  search(query: "repo:apollographql/apollo is:issue", type: ISSUE, first: 5) {
-    issueCount
-    nodes {
-      ... on Issue {
-        number
-        title
-      }
-    }
-  }
-}
-    `;
-export type ComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<Query, QueryVariables>, 'query'>;
-
-    export const Component = (props: ComponentProps) => (
-      <ApolloReactComponents.Query<Query, QueryVariables> query={Document} {...props} />
-    );
-    
-export type Props<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<Query, QueryVariables>
-    } & TChildProps;
-export function with<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  Query,
-  QueryVariables,
-  Props<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, Query, QueryVariables, Props<TChildProps, TDataName>>(Document, {
-      alias: '',
-      ...operationOptions
-    });
-};
-
-/**
- * __useQuery__
- *
- * To run a query within a React component, call `useQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQuery({
- *   variables: {
- *   },
- * });
- */
-export function useQuery(baseOptions?: Apollo.QueryHookOptions<Query, QueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Query, QueryVariables>(Document, options);
-      }
-export function useLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Query, QueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Query, QueryVariables>(Document, options);
-        }
-export type QueryHookResult = ReturnType<typeof useQuery>;
-export type LazyQueryHookResult = ReturnType<typeof useLazyQuery>;
-export type QueryResult = Apollo.QueryResult<Query, QueryVariables>;
-export const GetMyUsersDocument = gql`
-    query getMyUsers($count: Int!, $id: String!, $dataOrder: OrderDirection!) {
-  user(login: $id) {
-    login
-    name
-    location
-    email
-    url
-    avatarUrl
-    repositories(first: $count, orderBy: {field: CREATED_AT, direction: $dataOrder}) {
-      nodes {
-        createdAt
-        description
-        name
-        url
-        updatedAt
-      }
-    }
-  }
-}
-    `;
-export type GetMyUsersComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetMyUsersQuery, GetMyUsersQueryVariables>, 'query'> & ({ variables: GetMyUsersQueryVariables; skip?: boolean; } | { skip: boolean; });
-
-    export const GetMyUsersComponent = (props: GetMyUsersComponentProps) => (
-      <ApolloReactComponents.Query<GetMyUsersQuery, GetMyUsersQueryVariables> query={GetMyUsersDocument} {...props} />
-    );
-    
-export type GetMyUsersProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetMyUsersQuery, GetMyUsersQueryVariables>
-    } & TChildProps;
-export function withGetMyUsers<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetMyUsersQuery,
-  GetMyUsersQueryVariables,
-  GetMyUsersProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetMyUsersQuery, GetMyUsersQueryVariables, GetMyUsersProps<TChildProps, TDataName>>(GetMyUsersDocument, {
-      alias: 'getMyUsers',
-      ...operationOptions
-    });
-};
-
-/**
- * __useGetMyUsersQuery__
- *
- * To run a query within a React component, call `useGetMyUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetMyUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetMyUsersQuery({
- *   variables: {
- *      count: // value for 'count'
- *      id: // value for 'id'
- *      dataOrder: // value for 'dataOrder'
- *   },
- * });
- */
-export function useGetMyUsersQuery(baseOptions: Apollo.QueryHookOptions<GetMyUsersQuery, GetMyUsersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMyUsersQuery, GetMyUsersQueryVariables>(GetMyUsersDocument, options);
-      }
-export function useGetMyUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyUsersQuery, GetMyUsersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMyUsersQuery, GetMyUsersQueryVariables>(GetMyUsersDocument, options);
-        }
-export type GetMyUsersQueryHookResult = ReturnType<typeof useGetMyUsersQuery>;
-export type GetMyUsersLazyQueryHookResult = ReturnType<typeof useGetMyUsersLazyQuery>;
-export type GetMyUsersQueryResult = Apollo.QueryResult<GetMyUsersQuery, GetMyUsersQueryVariables>;
+export type GetUserDataQueryHookResult = ReturnType<typeof useGetUserDataQuery>;
+export type GetUserDataLazyQueryHookResult = ReturnType<typeof useGetUserDataLazyQuery>;
+export type GetUserDataQueryResult = Apollo.QueryResult<GetUserDataQuery, GetUserDataQueryVariables>;

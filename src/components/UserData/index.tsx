@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import styles from "./index.module.css";
+import styles from "./styles.module.css";
 import dayjs from "dayjs";
+import { GetUserDataQuery } from "../../generated/types";
 
 type UserDataProps = {
   repositoriesNumber: string;
@@ -9,11 +10,7 @@ type UserDataProps = {
 };
 
 const GET_USER_DATA = gql`
-  query getAnyRepositories(
-    $count: Int!
-    $id: String!
-    $dataOrder: OrderDirection!
-  ) {
+  query getUserData($count: Int!, $id: String!, $dataOrder: OrderDirection!) {
     user(login: $id) {
       login
       name
@@ -29,8 +26,8 @@ const GET_USER_DATA = gql`
           createdAt
           description
           name
-          url
           updatedAt
+          url
         }
       }
     }
@@ -38,7 +35,7 @@ const GET_USER_DATA = gql`
 `;
 
 function UserData({ repositoriesNumber, githubId, dataOrder }: UserDataProps) {
-  const { loading, error, data } = useQuery(GET_USER_DATA, {
+  const { loading, error, data } = useQuery<GetUserDataQuery>(GET_USER_DATA, {
     variables: {
       count: parseInt(repositoriesNumber, 10),
       id: githubId,
@@ -53,29 +50,15 @@ function UserData({ repositoriesNumber, githubId, dataOrder }: UserDataProps) {
     url,
     avatarUrl,
     repositories,
-  } = data?.user || {}; // 左辺がundifinedになるのを避けるため、 ||{}をつける
+  } = data?.user || {}; // 左辺がundifinedになるのを避けるため、 || {}をつける
   const repositoriesArray = repositories?.nodes;
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p className={styles.errorText}>{error.message}</p>;
 
-  const repositoriesItem = repositoriesArray.map(
-    (
-      {
-        description,
-        name,
-        createdAt,
-        url,
-        updatedAt,
-      }: {
-        description: string;
-        name: string;
-        createdAt: string;
-        url: string;
-        updatedAt: string;
-      },
-      index: number
-    ) => {
+  const repositoriesItem = repositoriesArray?.map(
+    (repository, index: number) => {
+      const { createdAt, description, name, updatedAt, url } = repository || {};
       return (
         <div key={name} style={{ paddingLeft: 10, paddingBottom: 10 }}>
           <div>
@@ -101,18 +84,13 @@ function UserData({ repositoriesNumber, githubId, dataOrder }: UserDataProps) {
   return (
     <>
       <h3>
-        <a href={url} style={{ textDecoration: "none" }}>
-          <img
-            src={avatarUrl}
-            alt="icon"
-            style={{
-              width: 20,
-              borderRadius: "50%",
-            }}
-          />
-          {userName}
-        </a>
-        ({login})
+        <div className={styles.userNamesWrapper}>
+          <a href={url} className={styles.iconWrapper}>
+            <img src={avatarUrl} alt="icon" className={styles.icon} />
+            {userName}
+          </a>
+          ({login})
+        </div>
       </h3>
       <div>Location: {location ? location : "none"}</div>
       <div>Mail: {email ? email : "none"}</div>

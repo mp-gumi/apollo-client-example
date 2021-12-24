@@ -1,0 +1,24 @@
+.errorText {
+  color: #ff0000;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.icon {
+  width: 20px;
+  border-radius: 50%;
+  margin: 0 4px 0 0;
+}
+
+.userNamesWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  padding: 0 4px 0 0;
+}
